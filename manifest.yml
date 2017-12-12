@@ -6,5 +6,3 @@ applications:
   random-route: true
   memory: 512M
   instances: 2
-  env:
-    WELCOME_MESSAGE: Hello from Cloud Foundry
