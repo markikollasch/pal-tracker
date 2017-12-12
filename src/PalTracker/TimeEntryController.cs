@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PalTracker
 {
+    [Route("/time-entries")]
     public class TimeEntryController : Controller
     {
         private ITimeEntryRepository _timeEntryRepository;
@@ -12,29 +13,51 @@ namespace PalTracker
             _timeEntryRepository = timeEntryRepository;
         }
 
-        public IActionResult Read(int id)
+        [HttpGet("{id}", Name = "GetTimeEntry")]
+        public IActionResult Read(long id)
         {
-            throw new NotImplementedException();
+            if (_timeEntryRepository.Contains(id))
+            {
+                return Ok(_timeEntryRepository.Find(id));
+            }
+
+            return NotFound();
         }
 
-        public IActionResult Create(TimeEntry timeEntry)
+        [HttpPost]
+        public IActionResult Create([FromBody] TimeEntry timeEntry)
         {
-            throw new NotImplementedException();
+            var created = _timeEntryRepository.Create(timeEntry);
+            return CreatedAtRoute("GetTimeEntry", new { id = created.Id }, created);
         }
 
+        [HttpGet]
         public IActionResult List()
         {
-            throw new NotImplementedException();
+            return Ok(_timeEntryRepository.List());
         }
 
-        public IActionResult Update(long id, TimeEntry timeEntry)
+        [HttpPut("{id}")]
+        public IActionResult Update(long id, [FromBody] TimeEntry timeEntry)
         {
-            throw new NotImplementedException();
+            if (!_timeEntryRepository.Contains(id))
+            {
+                return NotFound();
+            }
+
+            return Ok(_timeEntryRepository.Update(id, timeEntry));
         }
 
+        [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            throw new NotImplementedException();
+            if (!_timeEntryRepository.Contains(id))
+            {
+                return NotFound();
+            }
+
+            _timeEntryRepository.Delete(id);
+            return NoContent();
         }
     }
 }
