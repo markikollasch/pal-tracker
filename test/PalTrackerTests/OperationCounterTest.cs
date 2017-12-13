@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using PalTracker;
 using Xunit;
+using System.Collections.Immutable;
 
 namespace PalTrackerTests
 {
@@ -23,7 +24,7 @@ namespace PalTrackerTests
                 {TrackedOperation.List, 1},
                 {TrackedOperation.Update, 7},
                 {TrackedOperation.Delete, 3}
-            };
+            }.ToImmutableDictionary();
 
             foreach (var entry in exepectedCounts)
             {
@@ -33,7 +34,7 @@ namespace PalTrackerTests
                 }
             }
 
-            Assert.Equal(exepectedCounts, _counter.GetCounts());
+            Assert.Equal(exepectedCounts, _counter.GetCounts().ToImmutableDictionary());
         }
 
         [Fact]
