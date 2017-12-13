@@ -7,6 +7,7 @@ using Steeltoe.CloudFoundry.Connector.MySql.EFCore;
 using Steeltoe.Extensions.Configuration;
 using Steeltoe.Management.CloudFoundry;
 using Steeltoe.Management.Endpoint.Health;
+using Steeltoe.Management.Endpoint.Info;
 
 namespace PalTracker
 {
