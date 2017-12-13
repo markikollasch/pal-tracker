@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
@@ -10,7 +12,9 @@ namespace PalTracker
         public OperationCounter()
         {
             _count = new Dictionary<TrackedOperation, int>();
-            _count[TrackedOperation.Create] = 0;
+            foreach (TrackedOperation op in Enum.GetValues(typeof(TrackedOperation))) {
+                _count.Add(op, 0);
+            }
         }
 
         public string Name => $"{typeof(T).Name}Operations";
@@ -19,14 +23,7 @@ namespace PalTracker
 
         public void Increment(TrackedOperation trackedOperation)
         {
-            if (_count.TryGetValue(trackedOperation, out int count))
-            {
-                _count[trackedOperation] = count + 1;
-            }
-            else
-            {
-                _count[trackedOperation] = 1;
-            }
+            ++_count[trackedOperation];
         }
     }
 }
