@@ -6,3 +6,5 @@ applications:
   buildpack: https://github.com/cloudfoundry/dotnet-core-buildpack#v1.0.31
   memory: 512M
   instances: 1
+  services:
+  - tracker-database
